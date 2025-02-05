@@ -1,0 +1,86 @@
+/* styles.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Современный шрифт */
+    background-color: #e9ecef; /* Светло-серый фон */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Полная высота экрана */
+}
+
+.container {
+    background-color: #ffffff; /* Белый фон для контейнера */
+    padding: 30px;
+    border-radius: 10px; /* Более закругленные углы */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Более мягкая тень */
+    width: 350px; /* Ширина контейнера */
+}
+
+h2 {
+    text-align: center; /* Выравнивание заголовка по центру */
+    color: #333; /* Цвет текста заголовка */
+    margin-bottom: 20px; /* Отступ снизу заголовка */
+}
+
+.error {
+    background-color: #f8d7da; /* Светлый красный фон для ошибок */
+    color: #721c24; /* Темно-красный цвет текста */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #f5c6cb; /* Светло-красная рамка */
+    border-radius: 5px; /* Закругленные углы для блока ошибок */
+}
+
+label {
+    display: block; /* Блоковое отображение для меток */
+    margin-bottom: 5px; /* Отступ снизу */
+    color: #495057; /* Темно-серый цвет меток */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%; /* Полная ширина полей ввода */
+    padding: 12px; /* Увеличенный отступ внутри полей ввода */
+    margin-bottom: 15px; /* Отступ снизу полей ввода */
+    border: 1px solid #ced4da; /* Светло-серая рамка */
+    border-radius: 5px; /* Закругленные углы */
+    transition: border-color 0.3s; /* Плавный переход цвета рамки */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #80bdff; /* Цвет рамки при фокусе */
+    outline: none; /* Убираем стандартное обрамление при фокусе */
+}
+
+button {
+    width: 100%; /* Полная ширина кнопки */
+    padding: 12px; /* Увеличенный отступ внутри кнопки */
+    background-color: #007bff; /* Синий фон кнопки */
+    color: white; /* Белый цвет текста кнопки */
+    border: none; /* Убираем рамку */
+    border-radius: 5px; /* Закругленные углы для кнопки */
+    cursor: pointer; /* Курсор при наведении */
+    font-size: 16px; /* Размер шрифта кнопки */
+    transition: background-color 0.3s; /* Плавный переход цвета фона кнопки */
+}
+
+button:hover {
+    background-color: #0056b3; /* Темнее синий при наведении */
+}
+
+p {
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+a {
+    color: #007bff; /* Цвет ссылок */
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+}
+
+a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении на ссылку */
+}

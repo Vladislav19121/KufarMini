@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Light gray background */
+            color: #343a40; /* Dark gray text */
+        }
+
+        .container {
+            max-width: 960px; /* Adjust as needed */
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff; /* Primary color */
+            margin-bottom: 20px;
+        }
+
+        /* Контейнер для товаров в корзине */
+        .cart-items-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Стиль для каждого товара в корзине */
+        .cart-item {
+            background-color: #fff; /* White background for each item */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            padding: 20px;
+            display: flex;
+            align-items: center; /* Vertically center content */
+        }
+
+        .cart-item h3 {
+            margin: 0;
+            color: #212529; /* Darker color for heading */
+        }
+
+        .cart-item img {
+            max-width: 120px; /* Adjusted image size */
+            height: auto;
+            border-radius: 5px;
+            margin-right: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Softer shadow for image */
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+            color: #495057; /* Slightly lighter text color */
+        }
+
+        /* Стили для блока с итоговой суммой */
+        .cart-summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: right;
+            color: #343a40;
+        }
+
+        .cart-summary p {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .cart-summary a {
+            background-color: #28a745; /* Green color for checkout button */
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.2s ease-in-out;
+            font-size: 1.1em;
+            display: inline-block; /* To allow width/height settings */
+        }
+
+        .cart-summary a:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Стиль, когда корзина пуста */
+        .empty-cart {
+            text-align: center;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #6c757d; /* Muted color */
+        }
+
+        /* Улучшенные стили для изображений */
+        .cart-item .no-image {
+            font-style: italic;
+            color: #6c757d; /* Muted color */
+            margin-right: 20px; /* Space for the text */
+        }
+
+        .cart-item .image-wrapper {
+            flex-shrink: 0; /* Prevent image from shrinking */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ваша корзина</h1>
+
+        {% if cart_items %}
+            <div class="cart-items-container">
+                {% for item in cart_items %}
+                    <div class="cart-item">
+                        {% if item.first_image %}
+                            <div class="image-wrapper">
+                                <img src="{{ item.first_image }}" alt="Изображение телефона {{ item.phone.name }}" >
+                            </div>
+                        {% else %}
+                            <p class="no-image">Нет изображения.</p>
+                        {% endif %}
+
+                        <div>
+                            <h3>{{ item.phone.name }} {{ item.phone.model }}</h3>
+                            <p>Цена: {{ item.phone.price }} руб.</p>
+                            <p>Количество: {{ item.quantity }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="cart-summary">
+                <p>Общая сумма: {{ total_price }} руб.</p>
+                <a href="#">Оформить заказ</a>
+            </div>
+
+        {% else %}
+            <p class="empty-cart">Ваша корзина пуста.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

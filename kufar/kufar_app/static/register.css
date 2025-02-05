@@ -1,0 +1,99 @@
+/* styles.css */
+
+/* Общие стили для всего документа */
+body {
+    font-family: 'Arial', sans-serif; /* Шрифт для всего документа */
+    background-color: #f4f7fa; /* Светлый фон страницы */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Полная высота экрана */
+}
+
+/* Контейнер для формы регистрации */
+.container {
+    background-color: #ffffff; /* Белый фон для контейнера */
+    padding: 30px;
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
+    width: 400px; /* Ширина контейнера */
+}
+
+/* Заголовок формы */
+h2 {
+    text-align: center; /* Выравнивание заголовка по центру */
+    color: #333; /* Цвет текста заголовка */
+    margin-bottom: 20px; /* Отступ снизу заголовка */
+}
+
+/* Стиль для блока ошибок */
+.error {
+    background-color: #f8d7da; /* Светлый красный фон для ошибок */
+    color: #721c24; /* Темно-красный цвет текста */
+    padding: 15px; /* Отступ внутри блока ошибок */
+    margin-bottom: 15px; /* Отступ снизу блока ошибок */
+    border: 1px solid #f5c6cb; /* Светло-красная рамка */
+    border-radius: 5px; /* Закругленные углы для блока ошибок */
+}
+
+/* Метки для полей ввода */
+label {
+    display: block; /* Блоковое отображение для меток */
+    margin-bottom: 5px; /* Отступ снизу меток */
+    color: #495057; /* Цвет текста меток */
+}
+
+/* Поля ввода */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%; /* Полная ширина полей ввода */
+    padding: 12px; /* Увеличенный отступ внутри полей ввода */
+    margin-bottom: 15px; /* Отступ снизу полей ввода */
+    border: 1px solid #ced4da; /* Светло-серая рамка */
+    border-radius: 5px; /* Закругленные углы */
+    transition: border-color 0.3s; /* Плавный переход цвета рамки */
+}
+
+/* Стили при фокусе на полях ввода */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #80bdff; /* Цвет рамки при фокусе */
+    outline: none; /* Убираем стандартное обрамление при фокусе */
+}
+
+/* Кнопка отправки формы */
+button {
+    width: 100%; /* Полная ширина кнопки */
+    padding: 12px; /* Увеличенный отступ внутри кнопки */
+    background-color: #007bff; /* Синий фон кнопки */
+    color: white; /* Белый цвет текста кнопки */
+    border: none; /* Убираем рамку у кнопки */
+    border-radius: 5px; /* Закругленные углы для кнопки */
+    cursor: pointer; /* Курсор при наведении на кнопку */
+    font-size: 16px; /* Размер шрифта кнопки */
+    transition: background-color 0.3s; /* Плавный переход цвета фона кнопки */
+}
+
+/* Эффект наведения на кнопку */
+button:hover {
+    background-color: #0056b3; /* Темнее синий при наведении на кнопку */
+}
+
+/* Параграф с текстом о входе в аккаунт */
+p {
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+/* Ссылки на странице */
+a {
+    color: #007bff; /* Цвет ссылок */
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+}
+
+a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении на ссылку */
+}
