@@ -18,7 +18,9 @@ class PhoneImageViewSet(viewsets.ModelViewSet):
     queryset = PhoneImage.objects.all()
     serializer_class = PhoneImageSerializer
     permission_classes = [IsAuthenticated]
-    
+
+
+
 
 @csrf_exempt
 def registration(request):
