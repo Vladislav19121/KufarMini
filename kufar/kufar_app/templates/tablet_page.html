@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Телефоны (Kufar-Style)</title>
+    <title>Планшеты (Kufar-Style)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Общие стили */
@@ -146,7 +146,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Телефоны (Kufar-Style)</title>
+    <title>Планшеты (Kufar-Style)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
@@ -266,44 +266,40 @@
         </div>
 
         <div class="phones-container">
-            {% for phone in phones %}
+            {% for tablet in tablets %}
                 <div class="phone-card">
-                    <h2>{{ phone.name }} {{ phone.model }}</h2>
-                    <p>Статус: {{ phone.get_status_display }}</p>
-                    <p>Описание: {{ phone.description }}</p>
-                    <p class="price">{{ phone.price }} руб.</p>
+                    <h2>{{ tablet.name }} {{ tablet.model }}</h2>
+                    <p>Статус: {{ tablet.get_status_display }}</p>
+                    <p>Описание: {{ tablet.description }}</p>
+                    <p class="price">{{ tablet.price }} руб.</p>
                     <h3>Изображения:</h3>
                     <div class="images-container">
-                        {% for image in phone.images.all %}
+                        {% for image in tablet.images.all %}
                             <div class="image-card">
-                                <img src="{{ image.images.url }}" alt="Изображение телефона {{ phone.name }}" />
+                                <img src="{{ image.images.url }}" alt="Изображение планшета {{ tablet.name }}" />
                             </div>
                         {% empty %}
                             <p>Нет изображений.</p>
                         {% endfor %}
                     </div>
-                    {% if user.is_authenticated %}
                     <div class="add-to-cart-container">
-                        
-                        <form method="post" action="{% url 'add_phone_in_cart' id=phone.id %}">
+                        <form method="post" action="{% url 'add_tablet_in_cart' id=tablet.id %}">
                             {% csrf_token %}
                             <button type="submit">Добавить в корзину</button>
                         </form>
                     </div>
-                    {% endif %}
                 </div>
             {% empty %}
-                <p>Нет телефонов для отображения.</p>
+                <p>На данный момент нет планшетов для покупки.</p>
             {% endfor %}
         </div>
     </div>
-    {% if user.is_authenticated %}
+
     <div class="add-announcement-button-container">
-        <form method="post" action="{% url 'add_phone_announcement' id=user.id %}">
+        <form method="post" action="{% url 'add_tablet_announcement' id=user.id %}">
             {% csrf_token %}
             <button type="submit">Добавить объявление</button>
         </form>
     </div>
-    {% endif %}
 </body>
 </html>

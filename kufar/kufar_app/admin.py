@@ -9,4 +9,13 @@ class PhonesAdmin(admin.ModelAdmin):
 @admin.register(PhoneImage)
 class PhoneImageAdmin(admin.ModelAdmin):
     list_display = ('images',)
-# Register your models here.
+
+@admin.register(Tablet)
+class TabletsAdmin(admin.ModelAdmin):
+    list_display = ('name', 'model', 'status')
+
+@admin.register(TabletImage)
+class TabletsImageAdmin(admin.ModelAdmin):
+    list_display = ('images',)
+
+    

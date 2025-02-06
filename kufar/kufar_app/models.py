@@ -95,16 +95,23 @@ class ComputerImage(models.Model):
         return f'Image for {self.computer.id} {self.computer.name} '
     
 class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='carts')
     created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'Cart for {self.user.username}'
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
-    phone = models.ForeignKey(Phone, on_delete=models.CASCADE)
+    phone = models.ForeignKey(Phone, on_delete=models.CASCADE, null=True, blank=True, related_name='cart_items')
+    tablet = models.ForeignKey(Tablet, on_delete=models.CASCADE, null=True, blank=True, related_name='cart_items')
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f'{self.quantity} of {self.phone.name} in cart'
+        if self.phone:
+            return f'{self.quantity} of {self.phone.name} in cart'
+        elif self.tablet:
+            return f'{self.quantity} of {self.tablet.name} in cart'
+        else:
+            return f'{self.quantity} of unknown item in cart'

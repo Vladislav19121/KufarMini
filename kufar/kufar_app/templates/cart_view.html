@@ -124,19 +124,33 @@
             <div class="cart-items-container">
                 {% for item in cart_items %}
                     <div class="cart-item">
-                        {% if item.first_image %}
-                            <div class="image-wrapper">
-                                <img src="{{ item.first_image }}" alt="Изображение телефона {{ item.phone.name }}" >
+                        {% if item.phone %}
+                            {% if item.phone.images.first %}
+                                <div class="image-wrapper">
+                                    <img src="{{ item.first_image }}" alt="Изображение телефона {{ item.phone.name }}">
+                                </div>
+                            {% else %}
+                                <p class="no-image">Нет изображения.</p>
+                            {% endif %}
+                            <div>
+                                <h3>{{ item.phone.name }} {{ item.phone.model }}</h3>
+                                <p>Цена: {{ item.phone.price }} руб.</p>
+                                <p>Количество: {{ item.quantity }}</p>
                             </div>
-                        {% else %}
-                            <p class="no-image">Нет изображения.</p>
+                        {% elif item.tablet %}
+                            {% if item.tablet.images.first %}
+                                <div class="image-wrapper">
+                                    <img src="{{ item.first_image }}" alt="Изображение планшета {{ item.tablet.name }}">
+                                </div>
+                            {% else %}
+                                <p class="no-image">Нет изображения.</p>
+                            {% endif %}
+                            <div>
+                                <h3>{{ item.tablet.name }} {{ item.tablet.model }}</h3>
+                                <p>Цена: {{ item.tablet.price }} руб.</p>
+                                <p>Количество: {{ item.quantity }}</p>
+                            </div>
                         {% endif %}
-
-                        <div>
-                            <h3>{{ item.phone.name }} {{ item.phone.model }}</h3>
-                            <p>Цена: {{ item.phone.price }} руб.</p>
-                            <p>Количество: {{ item.quantity }}</p>
-                        </div>
                     </div>
                 {% endfor %}
             </div>

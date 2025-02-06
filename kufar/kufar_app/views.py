@@ -68,10 +68,10 @@ def phones_page(request):
     return render(request, 'phone_page.html', {'phones': phones, 'images': images})
 
 def tablets_page(request):
-    cars = Car.objects.all()
-    images = CarImage.objects.all()
+    tablets = Tablet.objects.all()
+    images = TabletImage.objects.all()
     
-    # return render(request, 'phone_page.html', {'cars': phones, 'images': images})
+    return render(request, 'tablet_page.html', {'tablets': tablets, 'images': images})
 
 def computers_page(request):
     phones = Phone.objects.all()
@@ -90,7 +90,7 @@ def user_page(request, id):
     return render(request, 'user_page.html')
 
 @login_required
-def add_in_cart(request, id):
+def add_phone_in_cart(request, id):
     phone = get_object_or_404(Phone, id=id)
     if request.method =='POST':
         cart, created = Cart.objects.get_or_create(user=request.user)
@@ -99,23 +99,47 @@ def add_in_cart(request, id):
             cart_item.quantity += 1
             cart_item.save()
             return redirect('cart_view')
-        
+
+@login_required
+def add_tablet_in_cart(request, id):
+    tablet = get_object_or_404(Tablet, id=id)
+    if request.method =='POST':
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, tablet=tablet)
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+            return redirect('cart_view')
+
+@login_required
 def cart_view(request):
     try:
         cart = Cart.objects.get(user=request.user)
         cart_items = CartItem.objects.filter(cart=cart)
-        total_price = sum(item.quantity * item.phone.price for item in cart_items) 
+        total_price = 0  # Инициализируем total_price
+
         for item in cart_items:
-            images = PhoneImage.objects.filter(phone=item.phone)
-            if images.exists():
-                item.first_image = images.first().images.url
+            if item.phone:
+                first_phone_image = PhoneImage.objects.filter(phone=item.phone).first()
+                if first_phone_image:
+                    item.first_image = first_phone_image.images.url
+                else:
+                    item.first_image = None
+                total_price += item.phone.price * item.quantity # Обновляем total_price
+            elif item.tablet:
+                first_tablet_image = TabletImage.objects.filter(tablet=item.tablet).first()
+                if first_tablet_image:
+                    item.first_image = first_tablet_image.images.url
+                else:
+                    item.first_image = None
+                total_price += item.tablet.price * item.quantity # Обновляем total_price
             else:
-                item.first_image = None    
-                
+                item.first_image = None # Устанавливаем в None, если нет ни телефона, ни планшета
+
     except Cart.DoesNotExist:
         cart_items = []
         total_price = 0
-    
+
     context = {
         'cart_items': cart_items,
         'total_price': total_price,
@@ -144,6 +168,29 @@ def add_phone_announcement(request, id):
         form_img = PhoneImageForm()  # Создаем экземпляр класса, а не класс
 
     return render(request, 'add_phone_announcement.html', {'form': form, 'form_img': form_img})
+
+def add_tablet_announcement(request, id):
+    user = get_object_or_404(User, id=id)
+    if request.method == 'POST':
+        form = TabletForm(request.POST, request.FILES)
+        form_img = TabletImageForm(request.POST, request.FILES)
+
+        if form.is_valid() and form_img.is_valid():
+            # Сохраняем данные из PhoneForm
+            tablet = form.save()
+
+            # Получаем изображение из PhoneImageForm
+            tablet_image = form_img.save(commit=False)  # Не сохраняем сразу в БД
+            tablet_image.tablet = tablet  # Устанавливаем связь с телефоном
+            tablet_image.save()  # Теперь сохраняем изображение
+
+            return redirect('tablets')  # Или любой другой URL
+
+    else:
+        form = TabletForm()
+        form_img = TabletImageForm()  # Создаем экземпляр класса, а не класс
+
+    return render(request, 'add_tablet_announcement.html', {'form': form, 'form_img': form_img})
 
 
 
