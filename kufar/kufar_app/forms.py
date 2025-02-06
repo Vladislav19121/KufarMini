@@ -9,6 +9,11 @@ class CarForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
         }
 
+class CarImageForm(forms.ModelForm):
+    class Meta:
+        model = CarImage
+        fields = ['images']
+
 class PhoneForm(forms.ModelForm):
     class Meta:
         model = Phone

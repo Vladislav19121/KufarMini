@@ -8,6 +8,7 @@ from .serializers import *
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.decorators import login_required
 from .forms import *
+from django.http import HttpResponseBadRequest
 
 class PhonesViewSet(viewsets.ModelViewSet):
     queryset = Phone.objects.all()
@@ -80,10 +81,10 @@ def computers_page(request):
     return render(request, 'phone_page.html', {'phones': phones, 'images': images})
 
 def cars_page(request):
-    phones = Phone.objects.all()
-    images = PhoneImage.objects.all()
+    cars = Car.objects.all()
+    images = CarImage.objects.all()
     
-    return render(request, 'phone_page.html', {'phones': phones, 'images': images})
+    return render(request, 'car_page.html', {'cars': cars, 'images': images})
 
 def user_page(request, id):
     user = get_object_or_404(User, id=id)
@@ -99,6 +100,10 @@ def add_phone_in_cart(request, id):
             cart_item.quantity += 1
             cart_item.save()
             return redirect('cart_view')
+        else:
+            return redirect('cart_view')
+    else:
+        return HttpResponseBadRequest("Неверный метод запроса")
 
 @login_required
 def add_tablet_in_cart(request, id):
@@ -110,6 +115,25 @@ def add_tablet_in_cart(request, id):
             cart_item.quantity += 1
             cart_item.save()
             return redirect('cart_view')
+        else:
+            return redirect('cart_view')
+    else:
+        return HttpResponseBadRequest("Неверный метод запроса")
+    
+@login_required
+def add_car_in_cart(request, id):
+    car = get_object_or_404(Car, id=id)
+    if request.method =='POST':
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, car=car)
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+            return redirect('cart_view')
+        else:
+            return redirect('cart_view')
+    else:
+        return HttpResponseBadRequest("Неверный метод запроса")
 
 @login_required
 def cart_view(request):
@@ -145,6 +169,19 @@ def cart_view(request):
         'total_price': total_price,
     }
     return render(request, 'cart_view.html', context)
+
+def delete_item_cart(request, item_id):
+    if request.method == 'POST':
+        item = get_object_or_404(CartItem, id = item_id)
+        if item:
+            try:
+                item.delete()
+                return redirect('cart_view') 
+            except CartItem.DoesNotExist:
+                return f'Ошибка'
+
+    
+
 
 def add_phone_announcement(request, id):
     user = get_object_or_404(User, id=id)
@@ -192,6 +229,22 @@ def add_tablet_announcement(request, id):
 
     return render(request, 'add_tablet_announcement.html', {'form': form, 'form_img': form_img})
 
+def add_car_announcement(request, id):
+    user = get_object_or_404(User, id=id)
+    if request.method == 'POST':
+        form = CarForm(request.POST, request.FILES)
+        form_img = CarImageForm(request.POST, request.FILES)
+        if form.is_valid() and form_img.is_valid():
+            car = form.save()
+            car_img = form_img.save(commit=False)
+            car_img.car = car
+            car_img.save()
+            return redirect('cars')
+    else:
+        form = CarForm()
+        form_img = CarImageForm()  # Создаем экземпляр класса, а не класс
+
+    return render(request, 'add_car_announcement.html', {'form': form, 'form_img': form_img})
 
 
 

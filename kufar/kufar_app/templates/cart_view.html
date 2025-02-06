@@ -125,7 +125,7 @@
                 {% for item in cart_items %}
                     <div class="cart-item">
                         {% if item.phone %}
-                            {% if item.phone.images.first %}
+                            {% if item.first_image %}
                                 <div class="image-wrapper">
                                     <img src="{{ item.first_image }}" alt="Изображение телефона {{ item.phone.name }}">
                                 </div>
@@ -137,8 +137,13 @@
                                 <p>Цена: {{ item.phone.price }} руб.</p>
                                 <p>Количество: {{ item.quantity }}</p>
                             </div>
+                            <form method="post" action="{% url 'delete_item_cart' item.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit">Удалить из корзины</button>
+                            </form>
                         {% elif item.tablet %}
-                            {% if item.tablet.images.first %}
+                            {% if item.first_image %}
                                 <div class="image-wrapper">
                                     <img src="{{ item.first_image }}" alt="Изображение планшета {{ item.tablet.name }}">
                                 </div>
@@ -150,6 +155,11 @@
                                 <p>Цена: {{ item.tablet.price }} руб.</p>
                                 <p>Количество: {{ item.quantity }}</p>
                             </div>
+                            <form method="post" action="{% url 'delete_item_cart' item.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit">Удалить из корзины</button>
+                            </form>
                         {% endif %}
                     </div>
                 {% endfor %}

@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планшеты (Kufar-Style)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            margin-right: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none; /* Скрываем сайдбар по умолчанию*/
+        }
+
+        .sidebar h2 {
+            color: #ff6a00;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .phones-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .phone-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px;
+            display: flex; /* Используем flex для выравнивания */
+            flex-direction: column; /* Элементы сверху вниз */
+            min-height: 350px; /* Минимальная высота карточки */
+        }
+
+        .phone-card h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .phone-card p {
+            margin-bottom: 8px;
+        }
+
+        .phone-card .price {
+            color: #ff6a00;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .phone-card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart-container {
+            margin-top: auto; /* Кнопка прилипает к низу */
+            text-align: center;
+        }
+
+        .add-to-cart-container button {
+            background-color: #ff6a00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-announcement-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .add-announcement-button-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .phones-container:empty::before {
+            content: "Нет телефонов для отображения.";
+            display: block;
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Фильтры</h2>
+            <!-- Здесь можно добавить фильтры -->
+        </div>
+
+        <div class="phones-container">
+            {% for car in cars %}
+                <div class="phone-card">
+                    <h2>{{ car.name }} {{ car.model }}</h2>
+                    <p>Статус: {{ car.get_status_display }}</p>
+                    <p>Описание: {{ car.description }}</p>
+                    <p class="price">{{ car.price }} руб.</p>
+                    <h3>Изображения:</h3>
+                    <div class="images-container">
+                        {% for image in car.images.all %}
+                            <div class="image-card">
+                                <img src="{{ image.images.url }}" alt="Изображение планшета {{ tablet.name }}" />
+                            </div>
+                        {% empty %}
+                            <p>Нет изображений.</p>
+                        {% endfor %}
+                    </div>
+                    <div class="add-to-cart-container">
+                        <form method="post" action="{% url 'add_car_in_cart' id=car.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+            {% empty %}
+                <p>На данный момент нет машин для покупки.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="add-announcement-button-container">
+        <form method="post" action="{% url 'add_car_announcement' id=user.id %}">
+            {% csrf_token %}
+            <button type="submit">Добавить объявление</button>
+        </form>
+    </div>
+</body>
+</html>
