@@ -1,0 +1,274 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты поиска</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static 'css/search_results.css' %}">
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            /* Куфар: светло-серый фон */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* Стили для хедера */
+        header {
+            background-color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            /* Небольшая тень, как на Куфаре */
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .search-term {
+            font-style: italic;
+            color: #777;
+        }
+
+        /* Стили для основной части */
+        main {
+            padding: 20px 0;
+        }
+
+        .results-section {
+            margin-bottom: 20px;
+        }
+
+        .results-section h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* Адаптивная сетка */
+            gap: 20px;
+        }
+
+        .result-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Легкая тень для карточки */
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            min-height: 350px;
+            /* Задаём минимальную высоту карточки */
+        }
+
+        .result-image {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;  
+            border-radius: 8px;
+            margin-bottom: 10px;
+}
+
+        .result-info {
+            flex: 1;
+            /* Информация занимает всё доступное место */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-info h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .price {
+            color: #ff6a00;
+            /* Куфар: оранжевый цвет цены */
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            margin-bottom: 15px;
+            /* Увеличиваем отступ перед кнопкой */
+            flex: 1;
+            /* Описание занимает доступное место */
+        }
+
+        .view-more-button {
+            background-color: #ff6a00;
+            /* Куфар: оранжевый цвет кнопки */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            margin-top: auto;
+            /* Кнопка всегда внизу карточки */
+        }
+
+        .view-more-button:hover {
+            background-color: #e05b00;
+            /* Затемняем при наведении */
+        }
+
+        /* Стили для отсутствующих результатов */
+        .no-results {
+            font-style: italic;
+            color: #777;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Стили для футера */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            border-top: 1px solid #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Результаты поиска</h1>
+        {% if query %}
+            <p class="search-term">Вы искали: "{{ query }}"</p>
+        {% endif %}
+    </div>
+</header>
+
+<main>
+    <div class="container">
+
+        {% if phone_results or car_results or tablet_results or computer_results %}
+
+            {% if phone_results %}
+                <section class="results-section">
+                    <h2>Телефоны</h2>
+                    <div class="results-grid">
+                        {% for phone in phone_results %}
+                            <div class="result-card">
+                                <img src="{{ phone.images.first.images.url }}"
+                                     alt="{{ phone.name }} {{ phone.model }}" class="result-image">
+                                <div class="result-info">
+                                    <h3>{{ phone.name }} {{ phone.model }}</h3>
+                                    <p class="price">Цена: {{ phone.price }} руб.</p>
+                                    <p class="description">{{ phone.description|truncatechars:100 }}</p>
+                                    <a href="#" class="view-more-button">Подробнее</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if car_results %}
+                <section class="results-section">
+                    <h2>Автомобили</h2>
+                    <div class="results-grid">
+                        {% for car in car_results %}
+                            <div class="result-card">
+                                <img src="{{ car.images.first.images.url }}"
+                                     alt="{{ car.name }} {{ car.model }}" class="result-image">
+                                <div class="result-info">
+                                    <h3>{{ car.name }} {{ car.model }}</h3>
+                                    <p class="price">Цена: {{ car.price }} руб.</p>
+                                    <p class="description">{{ car.description|truncatechars:100 }}</p>
+                                    <a href="#" class="view-more-button">Подробнее</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if tablet_results %}
+                <section class="results-section">
+                    <h2>Планшеты</h2>
+                    <div class="results-grid">
+                        {% for tablet in tablet_results %}
+                            <div class="result-card">
+                                <img src="{{ tablet.images.first.images.url }}"
+                                     alt="{{ tablet.name }} {{ tablet.model }}" class="result-image">
+                                <div class="result-info">
+                                    <h3>{{ tablet.name }} {{ tablet.model }}</h3>
+                                    <p class="price">Цена: {{ tablet.price }} руб.</p>
+                                    <p class="description">{{ tablet.description|truncatechars:100 }}</p>
+                                    <a href="#" class="view-more-button">Подробнее</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if computer_results %}
+                <section class="results-section">
+                    <h2>Компьютеры</h2>
+                    <div class="results-grid">
+                        {% for computer in computer_results %}
+                            <div class="result-card">
+                                <img src="{{ computer.images.first.images.url }}"
+                                     alt="{{ computer.name }} {{ computer.model }}" class="result-image">
+                                <div class="result-info">
+                                    <h3>{{ computer.name }} {{ computer.model }}</h3>
+                                    <p class="price">Цена: {{ computer.price }} руб.</p>
+                                    <p class="description">{{ computer.description|truncatechars:100 }}</p>
+                                    <a href="#" class="view-more-button">Подробнее</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+
+        {% else %}
+            <p class="no-results">Ничего не найдено.</p>
+        {% endif %}
+
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Мой магазин. Все права защищены.</p>
+    </div>
+</footer>
+
+</body>
+</html>

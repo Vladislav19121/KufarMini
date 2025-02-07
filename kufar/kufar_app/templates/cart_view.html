@@ -160,7 +160,46 @@
                                 <input type="hidden" name="item_id" value="{{ item.id }}">
                                 <button type="submit">Удалить из корзины</button>
                             </form>
+                            {% elif item.car %}
+                            {% if item.first_image %}
+                                <div class="image-wrapper">
+                                    <img src="{{ item.first_image }}" alt="Изображение машины {{ item.car.name }}">
+                                </div>
+                            {% else %}
+                                <p class="no-image">Нет изображения.</p>
+                            {% endif %}
+                            <div>
+                                <h3>{{ item.car.name }} {{ item.car.model }}</h3>
+                                <p>Цена: {{ item.car.price }} руб.</p>
+                                <p>Количество: {{ item.quantity }}</p>
+                            </div>
+                            <form method="post" action="{% url 'delete_item_cart' item.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit">Удалить из корзины</button>
+                            </form>
+                            {% elif item.computer %}
+                            {% if item.first_image %}
+                                <div class="image-wrapper">
+                                    <img src="{{ item.first_image }}" alt="Изображение машины {{ item.computer.name }}">
+                                </div>
+                            {% else %}
+                                <p class="no-image">Нет изображения.</p>
+                            {% endif %}
+                            <div>
+                                <h3>{{ item.computer.name }} {{ item.computer.model }}</h3>
+                                <p>Цена: {{ item.computer.price }} руб.</p>
+                                <p>Количество: {{ item.quantity }}</p>
+                            </div>
+                            <form method="post" action="{% url 'delete_item_cart' item.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit">Удалить из корзины</button>
+                            </form>
+
+                        
                         {% endif %}
+                       
                     </div>
                 {% endfor %}
             </div>

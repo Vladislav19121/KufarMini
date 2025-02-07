@@ -32,6 +32,11 @@ class ComputerForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
         }
 
+class ComputerImageForm(forms.ModelForm):
+    class Meta:
+        model = ComputerImage
+        fields = ['images']
+
 class TabletForm(forms.ModelForm):
     class Meta:
         model = Tablet

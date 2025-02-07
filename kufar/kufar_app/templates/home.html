@@ -112,7 +112,10 @@
 </head>
 <body>
     <div class="top-bar">
-        <input type="text" class="search-input" placeholder="Я ищу...">
+        <form method="get" action="{% url 'search_results' %}" class="search-form">
+            <input type="text" class="search-input" placeholder="Я ищу..." name="q">
+            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+        </form>
         {% if user.is_authenticated %}
             <a href="{% url 'user_page' id=user.id %}" class="my-page-button">
                 <i class="fas fa-user"></i> Моя страница
@@ -134,7 +137,7 @@
                 <li><a href="{% url 'phones' %}"><i class="fas fa-mobile-alt"></i>Телефоны</a></li>
                 <li><a href="{% url 'tablets' %}"><i class="fas fa-tablet-alt"></i>Планшеты</a></li>
                 <li><a href="{% url 'cars' %}"><i class="fas fa-car"></i>Автомобили</a></li>
-                <li><a href="#"><i class="fas fa-laptop"></i>Компьютеры</a></li>
+                <li><a href="{% url 'computers' %}"><i class="fas fa-laptop"></i>Компьютеры</a></li>
                 <!-- Добавьте другие категории по мере необходимости -->
             </ul>
         </div>

@@ -106,6 +106,8 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
     phone = models.ForeignKey(Phone, on_delete=models.CASCADE, null=True, blank=True, related_name='cart_items')
     tablet = models.ForeignKey(Tablet, on_delete=models.CASCADE, null=True, blank=True, related_name='cart_items')
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, null=True, blank=True, related_name='cart_items')
+    computer = models.ForeignKey(Computer, on_delete=models.CASCADE, null=True, blank=True, related_name='cart_items')
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
