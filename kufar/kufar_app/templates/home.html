@@ -121,10 +121,10 @@
                 <i class="fas fa-user"></i> Моя страница
             </a>
         {% else %}
-            <a href="{% url 'login' %}" class="login-button">
+            <a href="{% url 'login' %}" class="login-button my-page-button">
                 Войти
             </a>
-            <a href="{% url 'register' %}" class="register-button">
+            <a href="{% url 'register' %}" class="register-button my-page-button">
                 Зарегистрироваться
             </a>
         {% endif %}

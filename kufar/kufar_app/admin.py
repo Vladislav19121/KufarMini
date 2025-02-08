@@ -18,4 +18,11 @@ class TabletsAdmin(admin.ModelAdmin):
 class TabletsImageAdmin(admin.ModelAdmin):
     list_display = ('images',)
 
+@admin.register(Car)
+class CarsAdmin(admin.ModelAdmin):
+    list_display = ('name', 'model', 'status')
+
+@admin.register(Computer)
+class ComputerssAdmin(admin.ModelAdmin):
+    list_display = ('name', 'model', 'status')
     

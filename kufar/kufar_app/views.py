@@ -65,26 +65,91 @@ def home(request):
 def phones_page(request):
     phones = Phone.objects.all()
     images = PhoneImage.objects.all()
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    try:
+        if min_price:
+            min_price = float(min_price)
+            phones = phones.filter(price__gte=min_price)
+        if max_price:
+            max_price = float(max_price)
+            phones = phones.filter(price__lte=max_price)
+    except ValueError:
+        error_message = "Пожалуйста, введите корректные числовые значения для цены."
+        context = {'phones': phones, 'error_message': error_message,
+                   'min_price': min_price, 'max_price': max_price, 'images': images} # Передаем введенные значения обратно
+        return render(request, 'phone_page.html', context)
+
+    context = {'phones': phones, 'min_price': min_price, 'max_price': max_price, 'images': images} # Передаем значения обратно
+    return render(request, 'phone_page.html', context)
     
-    return render(request, 'phone_page.html', {'phones': phones, 'images': images})
 
 def tablets_page(request):
     tablets = Tablet.objects.all()
     images = TabletImage.objects.all()
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    try:
+        if min_price:
+            min_price = float(min_price)
+            tablets = tablets.filter(price__gte=min_price)
+        if max_price:
+            max_price = float(max_price)
+            tablets = tablets.filter(price__lte=max_price)
+    except ValueError:
+        error_message = "Пожалуйста, введите корректные числовые значения для цены."
+        context = {'tablets': tablets, 'error_message': error_message,
+                   'min_price': min_price, 'max_price': max_price, 'images': images} # Передаем введенные значения обратно
+        return render(request, 'tablet_page.html', context)
+
+    context = {'tablets': tablets, 'min_price': min_price, 'max_price': max_price, 'images': images} # Передаем значения обратно
+    return render(request, 'tablet_page.html', context)
     
-    return render(request, 'tablet_page.html', {'tablets': tablets, 'images': images})
 
 def computers_page(request):
     computers = Computer.objects.all()
     images = ComputerImage.objects.all()
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    try:
+        if min_price:
+            min_price = float(min_price)
+            tablets = tablets.filter(price__gte=min_price)
+        if max_price:
+            max_price = float(max_price)
+            tablets = tablets.filter(price__lte=max_price)
+    except ValueError:
+        error_message = "Пожалуйста, введите корректные числовые значения для цены."
+        context = {'computers': computers, 'error_message': error_message,
+                   'min_price': min_price, 'max_price': max_price, 'images': images} # Передаем введенные значения обратно
+        return render(request, 'computer_page.html', context)
+
+    context = {'computers': computers, 'min_price': min_price, 'max_price': max_price, 'images': images} # Передаем значения обратно
+    return render(request, 'computer_page.html', context)
     
-    return render(request, 'computer_page.html', {'computers': computers, 'images': images})
 
 def cars_page(request):
     cars = Car.objects.all()
     images = CarImage.objects.all()
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    try:
+        if min_price:
+            min_price = float(min_price)
+            cars = cars.filter(price__gte=min_price)
+        if max_price:
+            max_price = float(max_price)
+            cars = cars.filter(price__lte=max_price)
+    except ValueError:
+        error_message = "Пожалуйста, введите корректные числовые значения для цены."
+        context = {'cars': cars, 'error_message': error_message,
+                   'min_price': min_price, 'max_price': max_price, 'images': images} # Передаем введенные значения обратно
+        return render(request, 'car_page.html', context)
+
+    context = {'cars': cars, 'min_price': min_price, 'max_price': max_price, 'images': images} # Передаем значения обратно
+    return render(request, 'car_page.html', context)
     
-    return render(request, 'car_page.html', {'cars': cars, 'images': images})
+  
 
 def user_page(request, id):
     user = get_object_or_404(User, id=id)
