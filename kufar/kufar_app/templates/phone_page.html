@@ -155,24 +155,27 @@
                             <p>Нет изображений.</p>
                         {% endfor %}
                     </div>
+                    {% if user.is_authenticated %}
                     <div class="add-to-cart-container">
                         <form method="post" action="{% url 'add_phone_in_cart' id=phone.id %}">
                             {% csrf_token %}
                             <button type="submit">Добавить в корзину</button>
                         </form>
                     </div>
+                    {% endif %}
                 </div>
             {% empty %}
                 <p>Нет телефонов, соответствующих вашим критериям.</p>
             {% endfor %}
         </div>
     </div>
-
+    {% if user.is_authenticated %}
     <div class="add-announcement-button-container">
-        <form method="post" action="{% url 'add_phone_announcement' id=user.id %}">
+        <form method="post" action="{% url 'add_phone_announcement' %}">
             {% csrf_token %}
             <button type="submit">Добавить объявление</button>
         </form>
     </div>
+    {% endif %}
 </body>
 </html>

@@ -140,24 +140,27 @@
                             <p>Нет изображений.</p>
                         {% endfor %}
                     </div>
+                    {% if user.is_authenticated %}
                     <div class="add-to-cart-container">
                         <form method="post" action="{% url 'add_computer_in_cart' id=computer.id %}">
                             {% csrf_token %}
                             <button type="submit">Добавить в корзину</button>
                         </form>
                     </div>
+                    {% endif %}
                 </div>
             {% empty %}
                 <p>На данный момент нет компьютеров для покупки.</p>
             {% endfor %}
         </div>
     </div>
-
+    {% if user.is_authenticated %}
     <div class="add-announcement-button-container">
-        <form method="post" action="{% url 'add_computer_announcement' id=user.id %}">
+        <form method="post" action="{% url 'add_computer_announcement' %}">
             {% csrf_token %}
             <button type="submit">Добавить объявление</button>
         </form>
     </div>
+    {% endif %}
 </body>
 </html>

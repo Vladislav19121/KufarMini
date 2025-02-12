@@ -280,8 +280,7 @@ def delete_item_cart(request, item_id):
     
 
 
-def add_phone_announcement(request, id):
-    user = get_object_or_404(User, id=id)
+def add_phone_announcement(request):
     if request.method == 'POST':
         form = PhoneForm(request.POST, request.FILES)
         form_img = PhoneImageForm(request.POST, request.FILES)
@@ -303,8 +302,7 @@ def add_phone_announcement(request, id):
 
     return render(request, 'add_phone_announcement.html', {'form': form, 'form_img': form_img})
 
-def add_tablet_announcement(request, id):
-    user = get_object_or_404(User, id=id)
+def add_tablet_announcement(request):
     if request.method == 'POST':
         form = TabletForm(request.POST, request.FILES)
         form_img = TabletImageForm(request.POST, request.FILES)
@@ -326,8 +324,7 @@ def add_tablet_announcement(request, id):
 
     return render(request, 'add_tablet_announcement.html', {'form': form, 'form_img': form_img})
 
-def add_car_announcement(request, id):
-    user = get_object_or_404(User, id=id)
+def add_car_announcement(request):
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
         form_img = CarImageForm(request.POST, request.FILES)
@@ -343,8 +340,7 @@ def add_car_announcement(request, id):
 
     return render(request, 'add_car_announcement.html', {'form': form, 'form_img': form_img})
 
-def add_computer_announcement(request, id):
-    user = get_object_or_404(User, id = id)
+def add_computer_announcement(request):
     if request.method == 'POST':
         form = ComputerForm(request.POST, request.FILES)
         form_img = ComputerImageForm(request.POST, request.FILES)
